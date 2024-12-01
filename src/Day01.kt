@@ -2,43 +2,44 @@ import kotlin.math.abs
 
 fun main() {
     fun getOrderedTwoLists(input: List<String>): Pair<List<Int>, List<Int>> {
-        val elements = input.map { it.split("[\\s]+".toRegex()) }
-            .map { Pair(it.get(0).toInt(), it.get(1).toInt()) }
+        val elements = input.map { it.extractNumbers("\\s+".toRegex()) }
 
-        val orderedFirstList = elements.map { it.first }.sorted()
-        val orderedSecondList = elements.map { it.second }.sorted()
+        val orderedFirstList = elements.map { it[0] }.sorted()
+        val orderedSecondList = elements.map { it[1] }.sorted()
         return Pair(orderedFirstList, orderedSecondList)
+    }
+
+    fun countSimilarities(number: Int, list: List<Int>): Int {
+        val firstIndex = list.indexOf(number)
+
+        return if (firstIndex == -1) {
+            0
+        } else {
+            var count = 1
+            var nextIndex = firstIndex + 1
+            while (list[nextIndex] == number) {
+                count++
+                nextIndex++
+            }
+            count
+        }
+
     }
 
     fun part1(input: List<String>): Int {
         val (orderedFirstList, orderedSecondList) = getOrderedTwoLists(input)
 
-        val diffList = mutableListOf<Int>()
-
-        for (i in 0..<orderedSecondList.size) {
-            diffList.add(abs(orderedSecondList.get(i) - orderedFirstList.get(i)))
-        }
-
-        return diffList.sum()
+        return orderedSecondList
+            .mapIndexed { index, e -> abs(e - orderedFirstList[index]) }
+            .sum()
     }
 
     fun part2(input: List<String>): Int {
         val (orderedFirstList, orderedSecondList) = getOrderedTwoLists(input)
 
-        val similarities = mutableListOf<Pair<Int,Int>>()
-
-        for (element in orderedFirstList) {
-            // FIXME Not optimized to parse all the list to count whereas it is ordered...
-            similarities.add(Pair(element, orderedSecondList.count { i -> i == element }))
-        }
-
-        var total = 0
-
-        for ((key,value) in similarities) {
-            total += key * value
-        }
-
-        return total
+        return orderedFirstList
+            .map { Pair(it, countSimilarities(it, orderedSecondList)) }
+            .fold(0, { total, (first, second) -> total + first * second })
     }
 
     // Test if implementation meets criteria from the description, like:
