@@ -1,10 +1,17 @@
 fun main() {
 
+    fun ignoreOutOfBoundException(process: () -> Unit) {
+        try {
+            process()
+        } catch (_: IndexOutOfBoundsException) {
+        }
+    }
+
     fun countHorizontal(chars: Array<CharArray>): Int {
         var count = 0
         for (i in chars.indices) {
             for (j in chars[i].indices) {
-                try {
+                ignoreOutOfBoundException {
                     if (chars[i][j] == 'X'
                         && chars[i][j + 1] == 'M'
                         && chars[i][j + 2] == 'A'
@@ -12,9 +19,8 @@ fun main() {
                     ) {
                         count++
                     }
-                } catch (_: IndexOutOfBoundsException) {
                 }
-                try {
+                ignoreOutOfBoundException {
                     if (chars[i][j] == 'X'
                         && chars[i][j - 1] == 'M'
                         && chars[i][j - 2] == 'A'
@@ -22,7 +28,6 @@ fun main() {
                     ) {
                         count++
                     }
-                } catch (_: IndexOutOfBoundsException) {
                 }
             }
         }
@@ -33,7 +38,7 @@ fun main() {
         var count = 0
         for (i in chars.indices) {
             for (j in chars[i].indices) {
-                try {
+                ignoreOutOfBoundException {
                     if (chars[i][j] == 'X'
                         && chars[i + 1][j] == 'M'
                         && chars[i + 2][j] == 'A'
@@ -41,10 +46,8 @@ fun main() {
                     ) {
                         count++
                     }
-                } catch (_: IndexOutOfBoundsException) {
                 }
-
-                try {
+                ignoreOutOfBoundException {
                     if (chars[i][j] == 'X'
                         && chars[i - 1][j] == 'M'
                         && chars[i - 2][j] == 'A'
@@ -52,7 +55,6 @@ fun main() {
                     ) {
                         count++
                     }
-                } catch (_: IndexOutOfBoundsException) {
                 }
             }
         }
@@ -63,7 +65,7 @@ fun main() {
         var count = 0
         for (i in chars.indices) {
             for (j in chars[i].indices) {
-                try {
+                ignoreOutOfBoundException {
                     if (chars[i][j] == 'X'
                         && chars[i + 1][j + 1] == 'M'
                         && chars[i + 2][j + 2] == 'A'
@@ -71,9 +73,8 @@ fun main() {
                     ) {
                         count++
                     }
-                } catch (_: IndexOutOfBoundsException) {
                 }
-                try {
+                ignoreOutOfBoundException {
                     if (chars[i][j] == 'X'
                         && chars[i + 1][j - 1] == 'M'
                         && chars[i + 2][j - 2] == 'A'
@@ -81,10 +82,8 @@ fun main() {
                     ) {
                         count++
                     }
-                } catch (_: IndexOutOfBoundsException) {
-
                 }
-                try {
+                ignoreOutOfBoundException {
                     if (chars[i][j] == 'X'
                         && chars[i - 1][j - 1] == 'M'
                         && chars[i - 2][j - 2] == 'A'
@@ -92,10 +91,8 @@ fun main() {
                     ) {
                         count++
                     }
-                } catch (_: IndexOutOfBoundsException) {
-
                 }
-                try {
+                ignoreOutOfBoundException {
                     if (chars[i][j] == 'X'
                         && chars[i - 1][j + 1] == 'M'
                         && chars[i - 2][j + 2] == 'A'
@@ -103,8 +100,6 @@ fun main() {
                     ) {
                         count++
                     }
-                } catch (_: IndexOutOfBoundsException) {
-
                 }
             }
         }
@@ -115,18 +110,17 @@ fun main() {
         var count = 0
         for (i in chars.indices) {
             for (j in chars[i].indices) {
-                try {
+                ignoreOutOfBoundException {
                     if (chars[i][j] == 'A'
                         && (chars[i - 1][j - 1] == 'M' && chars[i + 1][j + 1] == 'S'
-                                        || chars[i - 1][j - 1] == 'S' && chars[i + 1][j + 1] == 'M'
-                        )
+                                || chars[i - 1][j - 1] == 'S' && chars[i + 1][j + 1] == 'M'
+                                )
                         && (chars[i - 1][j + 1] == 'M' && chars[i + 1][j - 1] == 'S'
                                 || chars[i - 1][j + 1] == 'S' && chars[i + 1][j - 1] == 'M'
                                 )
                     ) {
                         count++
                     }
-                } catch (_: IndexOutOfBoundsException) {
                 }
             }
         }
