@@ -22,3 +22,7 @@ fun Any?.println() = println(this)
 
 fun String.extractNumbers(separator: Regex): List<Int> = this.split(separator)
     .map { it.toInt() }
+
+fun String.extractPairOfNumbers(separator: String): Pair<Int, Int> = this.split(separator)
+    .map { it.toInt() }
+    .let { Pair(it[0], it[1]) }
